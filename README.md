@@ -219,6 +219,10 @@ git config --global 'url.git@github.com:.pushinsteadof' 'https://github.com/'
 WSL側からだけでなくWindows側からも利用可能なのかを確かめるためには,プライベートリポジトリをsshでコマンドプロンプト又はPowershellでcloneする.
 あるいはcloneしたpush権限のあるリポジトリにpushすることで確認できるであろう.
 
+GUIでgit利用したい場合はVSCodeを利用する事をおすすめする.
+
+Git Graph等拡張機能を利用するとさらに便利にする事が出来ます.
+
 ## gitをアップデートする.
 
 VSCodeは**優秀なテキストエディタ**であり,gitも統合されている.
