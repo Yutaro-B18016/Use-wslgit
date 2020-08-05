@@ -40,7 +40,8 @@ git version
 git version 2.25.1
 ```
 
-のような表示が
+のように表示される.
+
 ## wslgitをインストールする.
 
 バージョン更新が楽なのでChocolateyを利用する.
