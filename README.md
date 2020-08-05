@@ -2,6 +2,8 @@
 
 Git for Windowsの代わりにwslgitを用いて,WSL側のgitをWindows側から利用する方法を示す.
 
+もし,WSL2で[ubuntu-wsl2-systemd-script](https://github.com/DamionGans/ubuntu-wsl2-systemd-script)等を利用し,systemdを利用できるようなハックをしている場合,wsl+linuxコマンドで実行されるwslコマンドは常にルートディレクトリで実行されるようになってしまうため,この方法は実質利用できない.
+
 ## WSLにgitをインストールする.
 
 インストール方法は選択したディストーションによって異なるが,以降,Ubuntuを利用しているとする.
