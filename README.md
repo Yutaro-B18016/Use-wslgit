@@ -168,11 +168,13 @@ Host github github.com
 このままでは,権限で怒られてしまうので,
 
 ```bash:bash
-chmod -R 600 ~/.ssh/
+chmod 700 ~/.ssh
 
-chmod 700 .ssh
+cd ~/.ssh
+
+chmod 600 *
 ```
-.sshの中身の権限を600に,.ssh自体を700に設定する.
+.ssh自体を700に設定し,.sshの中身の権限を600に設定する.
 
 ここまで,済めば設定が問題ないかを実際にssh接続をして確認する.
 
