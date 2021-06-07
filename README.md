@@ -2,8 +2,8 @@
 
 Git for Windowsの代わりにwslgitを用いて,WSL側のgitをWindows側から利用する方法を示す.
 
-もし,WSL2で[ubuntu-wsl2-systemd-script](https://github.com/DamionGans/ubuntu-wsl2-systemd-script)等を利用し,systemdを利用できるようにするハックをしている場合,wsl+linuxコマンドで実行されるwslコマンドは常にルートディレクトリで実行されるようになってしまうため,この方法は実質利用できない.
-おとなしく,WSL側だけでwslのgitを利用しよう.
+~~もし,WSL2で[ubuntu-wsl2-systemd-script](https://github.com/DamionGans/ubuntu-wsl2-systemd-script)等を利用し,systemdを利用できるようにするハックをしている場合,wsl+linuxコマンドで実行されるwslコマンドは常にルートディレクトリで実行されるようになってしまうため,この方法は実質利用できない.
+おとなしく,WSL側だけでwslのgitを利用しよう.~~ 非推奨になりました.
 
 ## WSLにgitをインストールする.
 
@@ -112,20 +112,22 @@ sshの設定のためのディレクトリをなければ作る.
 mkdir ~/.ssh
 ```
 
-次に,鍵を作成する.暗号強度が下記以上であり,githubが対応していれば何でもいい.(鍵の作成のみcmdやPowershellでもいいがパスに気をつけること)
+次に,鍵を作成する.暗号強度がrsa 4096以上であり,githubが対応していれば何でもいい.(鍵の作成のみcmdやPowershellでもいいがパスに気をつけること)
+
+暗号方式はEd25519がおすすめ.
 
 ```
-ssh-keygen -t rsa -b 4096
+ssh-keygen -t ed25519
 ```
 
 と入力すると,
 
 ```
-Generating public/private rsa key pair.
-Enter file in which to save the key (~/.ssh/id_rsa):
+Generating public/private ed25519 key pair.
+Enter file in which to save the key (~/.ssh/id_ed25519):
 ```
 
-と鍵の保存場所と名前を聞かれるので,適宜入力(入力がなければ~/.ssh/id_rsa)に作成される.
+と鍵の保存場所と名前を聞かれるので,適宜入力(入力がなければ~/.ssh/id_ed25519)に作成される.
 
 ここではデフォルトのままとする.
 
@@ -137,10 +139,24 @@ Enter passphrase (empty for no passphrase):
 
 鍵を使用する時に結局パスフレーズを聞かれるようになるため,何も入力せずにEnterで良い.
 
+これらの工程を一気にするためには,
+
+```
+ssh-keygen -t ed25519 -P "" -f ~/.ssh/id_ed25519
+```
+
+のように,
+
+```
+ssh-keygen -t ed25519 -P "パスフレーズ" -f 鍵までのパス
+```
+
+とすれば良い.
+
 こうして,出来た鍵をgithubに登録する.
 
 ```bash:bash
-cat ~/.ssh/id_rsa.pub|clip.exe
+cat ~/.ssh/id_ed25519.pub|clip.exe
 ```
 
 指定した名前に.pub拡張子を加えたものが公開鍵である.
@@ -158,12 +174,12 @@ githubへのssh接続に使う鍵を設定する.
 ```
 Host github github.com
   HostName github.com
-  IdentityFile ~/.ssh/id_rsa
+  IdentityFile ~/.ssh/id_ed25519
   User git
 ```
 
 といった内容のファイルを,~/.ssh直下に**config**という名前で作成する.
-~/.ssh/id_rsaは各自の秘密鍵のパスを設定する.
+~/.ssh/id_ed25519は各自の秘密鍵のパスを設定する.
 
 このままでは,権限で怒られてしまうので,
 
